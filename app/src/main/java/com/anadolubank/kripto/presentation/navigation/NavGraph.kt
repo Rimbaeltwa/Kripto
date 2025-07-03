@@ -1,8 +1,6 @@
 package com.anadolubank.kripto.presentation.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,6 +10,7 @@ import com.anadolubank.kripto.presentation.login.LoginViewModel
 import com.anadolubank.kripto.presentation.register.RegisterScreen
 import com.anadolubank.kripto.presentation.register.RegisterViewModel
 import com.anadolubank.kripto.presentation.crypto_list.CryptoViewModel
+import kotlinx.coroutines.delay
 
 //import com.anadolubank.kripto.presentation.crypto_list.CryptoListScreen
 //import com.anadolubank.kripto.presentation.crypto_list.CryptoListViewModel
@@ -34,6 +33,7 @@ fun AppNavGraph(
                 onRegisterClicked = {navController.navigate("register")},
                 onLoginSuccess = {
                     navController.navigate("crypto") {
+
                         popUpTo("login") { inclusive = true }
                     }
                 }

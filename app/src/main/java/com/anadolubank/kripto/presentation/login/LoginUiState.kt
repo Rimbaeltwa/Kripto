@@ -9,6 +9,6 @@ data class LoginUiState(
 
 
 ){
-    //değişkenleri buraya private olarak geçir
+    //solid principles gereği buradaki değişkenleri private'a geçir
     //ve public functionlarla dön.
 }

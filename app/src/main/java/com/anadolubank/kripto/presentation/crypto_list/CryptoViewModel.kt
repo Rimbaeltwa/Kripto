@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import android.util.Log
 import com.anadolubank.kripto.domain.repository.CryptoRepository
 import com.anadolubank.kripto.presentation.register.RegisterUiState
 import com.anadolubank.kripto.presentation.crypto_list.CryptoUiState

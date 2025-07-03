@@ -82,13 +82,11 @@ fun RegisterScreen(
                          viewModel.resetState()
                          }, modifier = Modifier.fillMaxWidth()) { Text("Giriş ekranına geri dönün") }
 
-        if (uiState.error != null) { // Display error message from ViewModel
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = uiState.error!!,
-                color = MaterialTheme.colorScheme.error,
-                style = MaterialTheme.typography.bodyMedium
-            )
+        if (uiState.error != null) {//ModalBottomSheet'e geçilebilir.
+            AlertDialog(onDismissRequest = {viewModel.clearError()},
+                title = { Text( "Uyarı") },
+                text = { Text(uiState.error!!) }, //null olmadıgına emin olunmalı neden??
+                confirmButton = { TextButton(onClick = {viewModel.clearError()}){ Text("Tamam") } })
         }
     }
 }

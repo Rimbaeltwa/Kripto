@@ -20,7 +20,7 @@ import com.anadolubank.kripto.presentation.login.LoginViewModel
 
 import com.anadolubank.kripto.presentation.navigation.AppNavGraph
 
-import com.anadolubank.kripto.presentation.splash.SplashScreen
+import com.anadolubank.kripto.presentation.SplashScreen
 import com.anadolubank.kripto.ui.theme.KriptoTheme
 
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
             KriptoTheme { Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                 var showSplashScreen by remember { mutableStateOf(true) }
                 LaunchedEffect(Unit) {
-                    delay(1500L)
+                    delay(2500L)
                     showSplashScreen = false
                 }
                 if (showSplashScreen){

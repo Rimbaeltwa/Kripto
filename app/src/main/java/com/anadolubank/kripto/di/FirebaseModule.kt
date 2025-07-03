@@ -1,7 +1,5 @@
 package com.anadolubank.kripto.di
 
-import com.anadolubank.kripto.data.AuthRepositoryImpl
-import com.anadolubank.kripto.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides

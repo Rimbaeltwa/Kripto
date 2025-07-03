@@ -31,6 +31,10 @@ private val authRepository: AuthRepository
         _uiState.value = _uiState.value.copy(confirmPassword = confirmPassword)
     }
 
+    fun clearError(){
+        _uiState.value = _uiState.value.copy(error = null)
+    }
+
     fun register() {
         if (_uiState.value.password != _uiState.value.confirmPassword) {
             _uiState.value = _uiState.value.copy(error = "Şifreler eşleşmeli!")

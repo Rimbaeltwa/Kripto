@@ -34,7 +34,7 @@ class LoginViewModel @Inject constructor(
             } else {
                 _uiState.value.copy(
                     isLoading = false,
-                    error = result.exceptionOrNull()?.localizedMessage
+                    error = result.exceptionOrNull()?.localizedMessage //hata mesajları nasıl değiştiriliyor?
                 )
             }
         }
@@ -42,6 +42,10 @@ class LoginViewModel @Inject constructor(
 
     fun resetState(){
         _uiState.value = LoginUiState()
+    }
+
+    fun clearError(){
+        _uiState.value= _uiState.value.copy(error = null)
     }
 
     fun logout() {
