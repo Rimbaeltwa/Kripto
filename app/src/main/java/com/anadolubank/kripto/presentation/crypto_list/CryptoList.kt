@@ -71,7 +71,7 @@ fun CryptoList(
                         onResultClick = {query=it},
                         onSearch = {query=it},
                         searchResults = searchResults,
-                        modifier = Modifier.weight(1f).fillMaxHeight().padding(end = 8.dp) )
+                        modifier = Modifier.weight(1.20f).fillMaxWidth())
                     IconButton(onClick = { viewModel.fetchCryptos() }) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
                     }
@@ -187,7 +187,8 @@ fun CustomizableSearchBar(
             colors = SearchBarDefaults.colors(),
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(top = 8.dp, end = 8.dp, start = 8.dp)
+                .padding(start = 8.dp, bottom = 4.dp, top = 2.dp)
+                .heightIn(min = 56.dp)
                 .clip(RoundedCornerShape(20.dp))
                 .semantics { traversalIndex = 0f },
 
