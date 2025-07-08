@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Refresh
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
@@ -64,7 +66,12 @@ fun CryptoList(
                 title = { Text("Kripto Listesi") },
                 actions = {
 
-                        CustomizableSearchBar(query = query, onQueryChange = {query=it}, onResultClick = {query=it}, onSearch = {query=it}, searchResults = searchResults, modifier = Modifier.weight(1f).fillMaxHeight().padding(end = 8.dp) )
+                        CustomizableSearchBar(query = query,
+                            onQueryChange = {query=it},
+                            onResultClick = {query=it},
+                            onSearch = {query=it},
+                            searchResults = searchResults,
+                            modifier = Modifier.weight(1f).fillMaxHeight().padding(end = 8.dp) )
                         IconButton(onClick = { viewModel.fetchCryptos() }) {
                             Icon(Icons.Default.Refresh, contentDescription = "Yenile")
                         }
@@ -154,6 +161,7 @@ fun MinimalDropdownMenu(onLogout: () -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomizableSearchBar(
+    modifier: Modifier = Modifier,
     query: String,
     onQueryChange: (String) -> Unit,
     onSearch: (String) -> Unit,
@@ -165,7 +173,7 @@ fun CustomizableSearchBar(
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingContent: (@Composable (String) -> Unit)? = null,
     leadingContent: (@Composable () -> Unit)? = null,
-    modifier: Modifier = Modifier
+
 ) {
     // Track expanded state of search bar
     var expanded by rememberSaveable { mutableStateOf(false) }
@@ -176,9 +184,16 @@ fun CustomizableSearchBar(
             .semantics { isTraversalGroup = true }
     ) {
         SearchBar(
+            shape = RoundedCornerShape(16.dp),
+            colors = SearchBarDefaults.colors(
+
+            ),
             modifier = Modifier
-                .align(Alignment.TopCenter)
+                .align(Alignment.Center)
+                .padding(top = 8.dp, end = 8.dp, start = 8.dp)
+                .clip(RoundedCornerShape(20.dp))
                 .semantics { traversalIndex = 0f },
+
             inputField = {
                 // Customizable input field implementation
                 SearchBarDefaults.InputField(
@@ -212,9 +227,8 @@ fun CustomizableSearchBar(
                                 onResultClick(resultText)
                                 expanded = false
                             }
-                            .height(height = 16.dp)
-                            .width(16.dp)
-                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .fillMaxHeight()
+
                     )
                 }
             }

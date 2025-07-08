@@ -24,6 +24,7 @@ fun AppNavGraph(
         navController = navController,
         startDestination = "login"
     ) {
+
         composable("login") {
             LoginScreen(
                 viewModel = loginViewModel,
@@ -38,8 +39,6 @@ fun AppNavGraph(
         }
 
         composable("register") {
-
-
             RegisterScreen(
                 viewModel = registerViewModel,
                 onRegisterSuccess = {
@@ -50,6 +49,7 @@ fun AppNavGraph(
 
             )
         }
+
         composable("crypto"){
             CryptoList(
                 viewModel = cryptoViewModel,
@@ -61,10 +61,9 @@ fun AppNavGraph(
                         popUpTo(0)
                         launchSingleTop = true
                     }
-
-
-                     }
+                }
             )
         }
+
     }
 }

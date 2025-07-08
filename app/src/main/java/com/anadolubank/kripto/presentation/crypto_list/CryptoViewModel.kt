@@ -40,5 +40,10 @@ class CryptoViewModel @Inject constructor(
         }
     }
 
-    fun logout() = viewModelScope.launch { authRepo.logout() }
+    fun logout() = viewModelScope.launch {
+        authRepo.logout()
+        //_uiState.value = CryptoUiState.Loading // or CryptoUiState.Idle if you define one
+        //_isRefreshing.value = false
+
+    }
 }
