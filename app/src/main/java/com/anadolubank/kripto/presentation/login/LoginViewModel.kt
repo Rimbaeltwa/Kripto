@@ -3,6 +3,7 @@ package com.anadolubank.kripto.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anadolubank.kripto.domain.repository.AuthRepository
+import com.google.firebase.auth.FirebaseAuthEmailException
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +27,19 @@ class LoginViewModel @Inject constructor(
     }
 
     fun login() {
+
+        /*
+        * error = when (val exception = result.exceptionOrNull()){
+
+                       is FirebaseAuthEmailException -> "Geçerli email giriniz."
+                        is FirebaseAuthInvalidUserException-> "Kullanıcı bulunamadı."
+                        is FirebaseAuthInvalidCredentialsException -> "Şifre yanlış."
+                        else -> exception?.localizedMessage ?: "Bilinmeyen hata"
+                    }
+        * */
+
         viewModelScope.launch {
+
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
             val result = authRepository.login(_uiState.value.email, _uiState.value.password)
             _uiState.value = if (result.isSuccess) {
@@ -34,7 +47,9 @@ class LoginViewModel @Inject constructor(
             } else {
                 _uiState.value.copy(
                     isLoading = false,
+
                     error = result.exceptionOrNull()?.localizedMessage //hata mesajları nasıl değiştiriliyor?
+
                 )
             }
         }

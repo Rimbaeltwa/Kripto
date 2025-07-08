@@ -34,4 +34,5 @@ class AuthRepositoryImpl @Inject constructor(
     override fun isUserLoggedIn(): Boolean {
         return firebaseAuth.currentUser != null
     } //local login olacak mı?
+    // belli bir süre uygulama açılmayınca logout yapma eklenebilir.
 }

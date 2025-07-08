@@ -1,6 +1,9 @@
 package com.anadolubank.kripto.domain.repository
-import com.anadolubank.kripto.domain.model.StockInfo
+
+import com.anadolubank.kripto.domain.model.CryptoCurrency
+import retrofit2.http.GET
 
 interface CryptoRepository {
-    suspend fun getCryptoList(): List<StockInfo>
+    @GET("cryptoAssets")
+    suspend fun getCryptoList(): List<CryptoCurrency>
 }

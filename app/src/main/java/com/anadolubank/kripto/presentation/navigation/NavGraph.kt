@@ -10,10 +10,7 @@ import com.anadolubank.kripto.presentation.login.LoginViewModel
 import com.anadolubank.kripto.presentation.register.RegisterScreen
 import com.anadolubank.kripto.presentation.register.RegisterViewModel
 import com.anadolubank.kripto.presentation.crypto_list.CryptoViewModel
-import kotlinx.coroutines.delay
 
-//import com.anadolubank.kripto.presentation.crypto_list.CryptoListScreen
-//import com.anadolubank.kripto.presentation.crypto_list.CryptoListViewModel
 
 @Composable
 fun AppNavGraph(
@@ -55,7 +52,18 @@ fun AppNavGraph(
         }
         composable("crypto"){
             CryptoList(
-                viewModel = cryptoViewModel
+                viewModel = cryptoViewModel,
+                onLogout = {
+                    cryptoViewModel.logout()
+                    loginViewModel.resetState()
+                    navController.navigate("login"){
+                        // Stack'i tamamen temizle
+                        popUpTo(0)
+                        launchSingleTop = true
+                    }
+
+
+                     }
             )
         }
     }

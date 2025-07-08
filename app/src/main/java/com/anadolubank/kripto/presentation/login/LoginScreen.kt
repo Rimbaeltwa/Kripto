@@ -12,21 +12,14 @@ import kotlinx.coroutines.delay
 import androidx.compose.material3.AlertDialog
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandHorizontally
-
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalDensity
-
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
 
 
 @Composable
@@ -56,7 +49,6 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         animateContent = true
     }
-
     LaunchedEffect(state.isLoggedIn) {
         if(state.isLoggedIn){
             hideKeyboard.value()
@@ -71,6 +63,8 @@ fun LoginScreen(
             .padding(32.dp),
         verticalArrangement = Arrangement.Center
     ) {
+        Text(text="Welcome", fontSize = 48.sp, fontFamily = FontFamily.Default )
+        Spacer(modifier = Modifier.height(32.dp))
         OutlinedTextField(
             value = state.email,
             onValueChange = viewModel::onEmailChange,
@@ -89,8 +83,7 @@ fun LoginScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { viewModel.login()
-                        viewModel.resetState()},
+            onClick = { viewModel.login()},
             enabled = !state.isLoading,
             modifier = Modifier.fillMaxWidth().alpha(contentAlpha)
         ) {
@@ -110,7 +103,6 @@ fun LoginScreen(
         )
         if (state.error != null) {
             AlertDialog(onDismissRequest = {viewModel.clearError()},
-
                 title = { Text( "Uyarı") },
                 text = {  Text(state.error!!) //null olmadıgına emin olunmalı neden??
                 },

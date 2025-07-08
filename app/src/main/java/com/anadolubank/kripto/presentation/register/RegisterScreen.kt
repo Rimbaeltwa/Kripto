@@ -16,16 +16,12 @@ fun RegisterScreen(
     onRegisterSuccess: () -> Unit = {},
     onBackToLogin: () -> Unit = {}
 ) {
-    // Observe the UI state from the ViewModel
     val uiState by viewModel.uiState.collectAsState()
 
-    // Use a LaunchedEffect to react to isRegistered state change
     LaunchedEffect(uiState.isRegistered) {
         if (uiState.isRegistered) {
             viewModel.resetState()
             onRegisterSuccess()
-            // Optionally, reset isRegistered in ViewModel to prevent re-triggering if screen recomposes
-            // viewModel.resetRegistrationState() // You'd add this function to your ViewModel
         }
     }
 
@@ -85,7 +81,7 @@ fun RegisterScreen(
         if (uiState.error != null) {//ModalBottomSheet'e geçilebilir.
             AlertDialog(onDismissRequest = {viewModel.clearError()},
                 title = { Text( "Uyarı") },
-                text = { Text(uiState.error!!) }, //null olmadıgına emin olunmalı neden??
+                text = { Text(uiState.error!!) }, //null olmadıgına emin olunmalı
                 confirmButton = { TextButton(onClick = {viewModel.clearError()}){ Text("Tamam") } })
         }
     }

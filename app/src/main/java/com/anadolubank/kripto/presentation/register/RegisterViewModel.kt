@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import android.util.Log
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
@@ -42,14 +41,12 @@ private val authRepository: AuthRepository
         }
         viewModelScope.launch {
             _uiState.value = _uiState.value.copy(isLoading = true, error = null)
-            //Log.d("RegisterViewModel", "Register işlemi başladı")
             val result = authRepository.register(
                 _uiState.value.email,
                 _uiState.value.password
             )
             if(result.isSuccess){
                 _uiState.value = _uiState.value.copy(isLoading = false, isRegistered = true)
-                Log.d("RegisterViewModel", "Register işlemi başarılı")
 
             } else {
                 _uiState.value = _uiState.value.copy(
