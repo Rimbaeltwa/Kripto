@@ -1,3 +1,4 @@
+// app/src/main/java/com/anadolubank/kripto/presentation/crypto_list/CryptoList.kt
 package com.anadolubank.kripto.presentation.crypto_list
 
 import android.annotation.SuppressLint
@@ -20,11 +21,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
+import com.anadolubank.kripto.R
 import com.anadolubank.kripto.domain.model.CryptoCurrency
-
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,14 +45,13 @@ fun CryptoList(
     } else {
         fullList.filter { crypto ->
             crypto.symbol.contains(query,ignoreCase = true) ||
-            crypto.baseCurrency.contains(query,ignoreCase = true) ||
-            crypto.quoteCurrency.contains(query,ignoreCase = true)
-
+                    crypto.baseCurrency.contains(query,ignoreCase = true) ||
+                    crypto.quoteCurrency.contains(query,ignoreCase = true)
         }
     }
 
     val searchResults = if (query.isBlank()){
-        emptyList<String>()
+        emptyList()
     } else {
         fullList.filter { it.symbol.contains(query,ignoreCase = true) }
             .map { it.symbol }
@@ -63,19 +64,18 @@ fun CryptoList(
                     containerColor   = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ),
-                title = { Text("Kripto Listesi") },
+                title = { Text( stringResource(R.string.crypto_list_title) ) },
                 actions = {
-
-                        CustomizableSearchBar(query = query,
-                            onQueryChange = {query=it},
-                            onResultClick = {query=it},
-                            onSearch = {query=it},
-                            searchResults = searchResults,
-                            modifier = Modifier.weight(1f).fillMaxHeight().padding(end = 8.dp) )
-                        IconButton(onClick = { viewModel.fetchCryptos() }) {
-                            Icon(Icons.Default.Refresh, contentDescription = "Yenile")
-                        }
-                        MinimalDropdownMenu(onLogout = onLogout)
+                    CustomizableSearchBar(query = query,
+                        onQueryChange = {query=it},
+                        onResultClick = {query=it},
+                        onSearch = {query=it},
+                        searchResults = searchResults,
+                        modifier = Modifier.weight(1f).fillMaxHeight().padding(end = 8.dp) )
+                    IconButton(onClick = { viewModel.fetchCryptos() }) {
+                        Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
+                    }
+                    MinimalDropdownMenu(onLogout = onLogout)
 
 
                 }
@@ -87,7 +87,6 @@ fun CryptoList(
                 .fillMaxSize()
                 .padding(padding)
         ) {
-            // PullToRefreshBox with correct parameters
             PullToRefreshBox(
                 isRefreshing = isRefreshing,
                 onRefresh = { viewModel.fetchCryptos() },
@@ -101,7 +100,7 @@ fun CryptoList(
                     }
                     is CryptoUiState.Success -> {
                         LazyColumn(
-                            modifier           = Modifier
+                            modifier = Modifier
                                 .fillMaxSize()
                                 .padding(horizontal = 16.dp),
                             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -115,7 +114,7 @@ fun CryptoList(
                     is CryptoUiState.Error -> {
                         val msg = (uiState as CryptoUiState.Error).msg
                         Text(
-                            text     = msg ?: "Yüklenme hatası",
+                            text     = msg ?: stringResource(R.string.loading_error),
                             color    = MaterialTheme.colorScheme.error,
                             modifier = Modifier.align(Alignment.Center)
                         )
@@ -147,10 +146,10 @@ fun MinimalDropdownMenu(onLogout: () -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     Box(modifier = Modifier.padding(16.dp)) {
         IconButton(onClick = { expanded = true }) {
-            Icon(Icons.Default.MoreVert, contentDescription = "Daha fazla", modifier = Modifier.size(24.dp))
+            Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.more_options), modifier = Modifier.size(24.dp))
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
-            DropdownMenuItem(text = { Text("Çıkış Yap") }, onClick = {
+            DropdownMenuItem(text = { Text(stringResource(R.string.logout)) }, onClick = {
                 expanded = false
                 onLogout()
             })
@@ -168,13 +167,13 @@ fun CustomizableSearchBar(
     searchResults: List<String>,
     onResultClick: (String) -> Unit,
     // Customization options
-    placeholder: @Composable () -> Unit = { Text("Search") },
-    leadingIcon: @Composable (() -> Unit)? = { Icon(Icons.Default.Search, contentDescription = "Search") },
+    placeholder: @Composable () -> Unit = { Text(stringResource(R.string.search_hint)) },
+    leadingIcon: @Composable (() -> Unit)? = { Icon(Icons.Default.Search, contentDescription = stringResource(R.string.search_hint)) },
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingContent: (@Composable (String) -> Unit)? = null,
     leadingContent: (@Composable () -> Unit)? = null,
 
-) {
+    ) {
     // Track expanded state of search bar
     var expanded by rememberSaveable { mutableStateOf(false) }
 
@@ -185,9 +184,7 @@ fun CustomizableSearchBar(
     ) {
         SearchBar(
             shape = RoundedCornerShape(16.dp),
-            colors = SearchBarDefaults.colors(
-
-            ),
+            colors = SearchBarDefaults.colors(),
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(top = 8.dp, end = 8.dp, start = 8.dp)

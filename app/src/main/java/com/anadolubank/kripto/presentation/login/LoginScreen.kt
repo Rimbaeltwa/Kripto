@@ -1,3 +1,4 @@
+// app/src/main/java/com/anadolubank/kripto/presentation/login/LoginScreen.kt
 package com.anadolubank.kripto.presentation.login
 
 import androidx.compose.foundation.clickable
@@ -18,8 +19,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
+import com.anadolubank.kripto.R
 
 
 @Composable
@@ -32,16 +35,15 @@ fun LoginScreen(
 
     val context = LocalContext.current
     val view = LocalView.current
-
     var animateContent by remember { mutableStateOf(false) }
 
     val contentAlpha by animateFloatAsState(
-        targetValue = if (animateContent) 1f else 0f, // 0'dan 1'e fade in
-        animationSpec = tween(durationMillis = 800), // 800ms süreli animasyon
+        targetValue = if (animateContent) 1f else 0f,
+        animationSpec = tween(durationMillis = 800),
         label = "contentAlphaAnimation"
     )
 
-    val hideKeyboard = rememberUpdatedState{
+    val hideKeyboard = rememberUpdatedState {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
@@ -63,12 +65,12 @@ fun LoginScreen(
             .padding(32.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text(text="Welcome", fontSize = 48.sp, fontFamily = FontFamily.Default )
+        Text(text = stringResource(R.string.welcome), fontSize = 48.sp, fontFamily = FontFamily.Default )
         Spacer(modifier = Modifier.height(32.dp))
         OutlinedTextField(
             value = state.email,
             onValueChange = viewModel::onEmailChange,
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.email_label)) },
             modifier = Modifier.fillMaxWidth().alpha(contentAlpha),
             enabled = !state.isLoading
         )
@@ -76,7 +78,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = state.password,
             onValueChange = viewModel::onPasswordChange,
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.password_label)) },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier.fillMaxWidth().alpha(contentAlpha),
             enabled = !state.isLoading
@@ -87,35 +89,36 @@ fun LoginScreen(
             enabled = !state.isLoading,
             modifier = Modifier.fillMaxWidth().alpha(contentAlpha)
         ) {
-            Text("Login")
+            Text(stringResource(R.string.login))
         }
-        //dil değiştirme butonu için yazılar nasıl saklanmalı?
+
         Text(
-            text = "Register",
+            text = stringResource(R.string.register),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .clickable {onRegisterClicked()
-                            viewModel.resetState()}
+                .clickable {
+                    onRegisterClicked()
+                    viewModel.resetState()
+                }
                 .padding(top = 16.dp, bottom = 16.dp, start = 16.dp, end=16.dp)
                 .alpha(contentAlpha),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary,
         )
+
+
         if (state.error != null) {
-            AlertDialog(onDismissRequest = {viewModel.clearError()},
-                title = { Text( "Uyarı") },
-                text = {  Text(state.error!!) //null olmadıgına emin olunmalı neden??
-                },
-                confirmButton = { TextButton(onClick = {viewModel.clearError()}){ Text("Tamam") } })
-
-
-            //Text(
-              //  text = state.error ?: "",
-              //  color = MaterialTheme.colorScheme.error,
-              //  modifier = Modifier.padding(top = 8.dp)
-           // )
+            AlertDialog(
+                onDismissRequest = {viewModel.clearError()},
+                title = { Text(stringResource(R.string.warning)) },
+                text = {  Text(state.error!!) },
+                confirmButton = {
+                    TextButton(onClick = {viewModel.clearError()}){
+                        Text(stringResource(R.string.ok))
+                    }
+                }
+            )
         }
     }
-    LoginAnimationHandler(isLoggedIn = state.isLoggedIn, onLoginSuccess = onLoginSuccess) // bu tarz componentlar daha iyiyse artılılabilir sor??
-
+    LoginAnimationHandler(isLoggedIn = state.isLoggedIn, onLoginSuccess = onLoginSuccess)
 }

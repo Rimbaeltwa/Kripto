@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">kripto</string>
+    <string name="app_name">Kripto</string>
+    <string name="crypto_list_title">Crypto List</string>
+    <string name="refresh">Refresh</string>
+    <string name="more_options">More Options</string>
+    <string name="logout">Log out</string>
+    <string name="search_hint">Search</string>
+    <string name="loading_error">Loading error!</string>
+
+    <string name="welcome">Welcome</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="confirm_password_label">Confirm Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="complete_registration">Complete Registration</string>
+    <string name="back_to_login">Back to Login</string>
+
+    <string name="warning">Warning</string>
+    <string name="ok">OK</string>
 </resources>
