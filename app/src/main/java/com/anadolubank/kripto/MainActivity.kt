@@ -48,7 +48,8 @@ class MainActivity : ComponentActivity() {
                 else{AppNavGraph(
                     loginViewModel = loginViewModel,
                     registerViewModel = registerViewModel,
-                    cryptoViewModel = cryptoViewModel
+                    cryptoViewModel = cryptoViewModel,
+
                 )}
 
             } }

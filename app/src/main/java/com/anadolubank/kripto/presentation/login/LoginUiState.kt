@@ -6,8 +6,6 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val error: String? = null,
     val isLoggedIn: Boolean = false
-
-
 ){
     //solid principles gereği buradaki değişkenleri private'a geçir
     //ve public functionlarla dön.

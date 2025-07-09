@@ -27,13 +27,15 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import com.anadolubank.kripto.R
 import com.anadolubank.kripto.domain.model.CryptoCurrency
+import android.net.Uri
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CryptoList(
     viewModel: CryptoViewModel,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onItemClick: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isRefreshing by viewModel.isRefreshing.collectAsState()
@@ -106,7 +108,10 @@ fun CryptoList(
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             items(filteredList) { item ->
-                                CryptoListItem(item)
+                                CryptoListItem(crypto = item,
+                                    onClick = { val encoded = Uri.encode(item.symbol)
+                                        onItemClick(encoded) }
+                                    )
                                 HorizontalDivider()
                             }
                         }
@@ -126,11 +131,13 @@ fun CryptoList(
 }
 
 @Composable
-fun CryptoListItem(crypto: CryptoCurrency) {
+fun CryptoListItem(crypto: CryptoCurrency, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable(onClick = onClick)
             .padding(8.dp)
+
     ) {
         Text(text = crypto.symbol, style = MaterialTheme.typography.titleMedium)
         Spacer(Modifier.height(4.dp))
