@@ -1,8 +1,6 @@
 package com.anadolubank.kripto.presentation.navigation
 
-import android.net.Uri
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -16,23 +14,8 @@ import com.anadolubank.kripto.presentation.login.LoginViewModel
 import com.anadolubank.kripto.presentation.register.RegisterScreen
 import com.anadolubank.kripto.presentation.register.RegisterViewModel
 import com.anadolubank.kripto.presentation.crypto_list.CryptoViewModel
-import com.anadolubank.kripto.domain.repository.CryptoDetailRepository
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import dagger.hilt.android.EntryPointAccessors
-import androidx.lifecycle.AbstractSavedStateViewModelFactory
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 
-@EntryPoint
-@InstallIn(SingletonComponent::class)
-interface CryptoDetailRepositoryEntryPoint {
-    fun getCryptoDetailRepository(): CryptoDetailRepository
-}
 
 @Composable
 fun AppNavGraph(
@@ -75,7 +58,7 @@ fun AppNavGraph(
         composable("crypto"){
             CryptoList(
                 onItemClick = {symbol ->
-                    val encoded = Uri.encode(symbol)
+
                     navController.navigate("crypto_detail/$symbol")
                 },
                 viewModel = cryptoViewModel,
@@ -97,17 +80,13 @@ fun AppNavGraph(
                 type = NavType.StringType
             })
         ) { backStackEntry ->
-            // now symbol = backStackEntry.arguments?.getString("symbol")
-            // will correctly be "0xBTC/BTC" (decoded for you)
             val detailViewModel: CryptoDetailViewModel =
                 hiltViewModel(backStackEntry)
-
             CryptoDetailScreen(
                 viewModel = detailViewModel,
+                cryptoListViewModel = cryptoViewModel,
                 onBack = { navController.popBackStack() }
             )
         }
-
-
     }
 }

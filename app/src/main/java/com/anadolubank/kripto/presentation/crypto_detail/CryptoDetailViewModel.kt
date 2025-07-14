@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anadolubank.kripto.domain.repository.CryptoDetailRepository
+import com.anadolubank.kripto.domain.repository.CryptoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,13 +18,14 @@ class CryptoDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     // SavedStateHandle'dan symbol argümanını al
-    private val symbol: String =
+     val symbol: String =
         savedStateHandle.get<String>("symbol") ?: run {
             throw IllegalArgumentException("Symbol argument is required")
         }
 
     private val _uiState =
         MutableStateFlow<CryptoDetailsUiState>(CryptoDetailsUiState.Loading)
+
     val uiState: StateFlow<CryptoDetailsUiState> = _uiState
 
     init {

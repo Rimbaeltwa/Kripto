@@ -2,13 +2,8 @@ package com.anadolubank.kripto.di
 
 import android.content.Context
 
-import com.anadolubank.kripto.data.CryptoDetailRepositoryImpl
 import com.anadolubank.kripto.data.remote.CryptoApiService
-import com.anadolubank.kripto.data.CryptoRepositoryImpl
 import com.anadolubank.kripto.data.remote.CryptoDetailApiService
-import com.anadolubank.kripto.domain.repository.CryptoDetailRepository
-import com.anadolubank.kripto.domain.repository.CryptoRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -62,15 +57,7 @@ abstract class NetworkModule {
             retrofit.create(CryptoDetailApiService::class.java)
     }
 
-    @Binds @Singleton
-    abstract fun bindCryptoRepo(
-        impl: CryptoRepositoryImpl
-    ): CryptoRepository
 
-    @Binds @Singleton
-    abstract fun bindCryptoDetailRepo(
-        impl: CryptoDetailRepositoryImpl
-    ): CryptoDetailRepository
 
 
 }
