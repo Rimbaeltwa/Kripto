@@ -35,6 +35,7 @@ fun CryptoDetailScreen(
     cryptoListViewModel: CryptoViewModel,
     onBack: () -> Unit
 ) {
+
     val uiState by viewModel.uiState.collectAsState()
     val symbol = viewModel.symbol
     // 1) İçerik için bir LazyColumnState hatırla
@@ -51,7 +52,6 @@ fun CryptoDetailScreen(
     val animatedElevation by targetElevation.animateElevation(durationMillis = 300)
 
     Scaffold(
-        // tüm ekranın arka plan rengini #020818 yap
         containerColor = Color(0xFF020818),
         topBar = {
             // Surface ile gölge uyguluyoruz
@@ -71,7 +71,6 @@ fun CryptoDetailScreen(
                             )
                         }
                     },
-                    // İç yüzey transparan kalsın, gölge zaten Surface'da
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.Transparent
                     )
@@ -96,7 +95,7 @@ fun CryptoDetailScreen(
                 }
                 is CryptoDetailsUiState.Success -> {
                     val bars = (uiState as CryptoDetailsUiState.Success).ohlcBars
-                    Log.d("asd" ,bars.toString())
+                    Log.d("Bars: " ,bars.toString())
                     LazyColumn(
                         state    = listState,
                         modifier = Modifier.wrapContentSize(),

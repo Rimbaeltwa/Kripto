@@ -1,7 +1,5 @@
 package com.anadolubank.kripto.presentation.components
 
-import android.graphics.Insets
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +28,8 @@ import com.patrykandpatrick.vico.core.cartesian.data.candlestickSeries
 import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.core.common.data.ExtraStore
 import com.anadolubank.kripto.domain.model.OhlcBar
+import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
+import com.patrykandpatrick.vico.compose.common.fill
 import com.patrykandpatrick.vico.compose.common.insets
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -111,7 +111,6 @@ fun CryptoCandlestickChart(
                 guideline = null,
                 tick = null,
                 label = rememberTextComponent(
-
                     color = Color.White,
                     textSize = 12.sp ,
                     padding = insets(end = 8.dp),
@@ -119,6 +118,7 @@ fun CryptoCandlestickChart(
                 )
             ),
             bottomAxis = HorizontalAxis.rememberBottom(
+                line = rememberLineComponent(thickness = 2.dp, strokeFill = fill(color = Color.White)),
                 guideline = null,
                 valueFormatter = BottomAxisValueFormatter,
                 tick = null,

@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.sp
 import com.anadolubank.kripto.R
-
+import java.lang.RuntimeException
 
 @Composable
 fun LoginScreen(
@@ -105,6 +105,14 @@ fun LoginScreen(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.primary,
         )
+
+        /*Spacer(modifier = Modifier.height(32.dp))
+        Button(
+            onClick = { throw RuntimeException("Test Crash") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Test Crash")
+        }*/
 
 
         if (state.error != null) {
